@@ -1,7 +1,7 @@
 $(function () {
     var bio = getBio();
-    var education = getEducation();
     var work = getWork();
+    var education = getEducation();
     var projects = getProjects();
 
     function init() {
@@ -23,30 +23,41 @@ $(function () {
             skills: ['Savior of the universe', 'Amazing Deliverboy', 'Awesome Pilot', 'Destroyer of the universe'],
             biopic: '../images/fry.jpg',
             display: function () {
-                fillBio();
+                var header = $('#header');
+                var topContacts = $('#topContacts');
+
+                header.prepend(fillData(HTMLheaderRole, this.role));
+                header.prepend(fillData(HTMLheaderName, this.name));
+
+                topContacts.append(fillData(HTMLmobile, this.contacts.mobile));
+                topContacts.append(fillData(HTMLemail, this.contacts.email));
+                topContacts.append(fillData(HTMLgithub, this.contacts.github));
+                topContacts.append(fillData(HTMLtwitter, this.contacts.twitter));
+                topContacts.append(fillData(HTMLlocation, this.contacts.location));
+
+                header.append(fillData(HTMLbioPic, this.biopic));
+                header.append(fillData(HTMLwelcomeMsg, this.welcomeMessage));
+                header.append(HTMLskillsStart);
+                this.skills.forEach(function (skill) {
+                    $('#skills').append(fillData(HTMLskills, skill));
+                });
             }
         };
     }
 
-    function fillBio() {
-        var header = $('#header');
-        var topContacts = $('#topContacts');
-
-        header.prepend(fillData(HTMLheaderRole, bio.role));
-        header.prepend(fillData(HTMLheaderName, bio.name));
-
-        topContacts.append(fillData(HTMLmobile, bio.contacts.mobile));
-        topContacts.append(fillData(HTMLemail, bio.contacts.email));
-        topContacts.append(fillData(HTMLgithub, bio.contacts.github));
-        topContacts.append(fillData(HTMLtwitter, bio.contacts.twitter));
-        topContacts.append(fillData(HTMLlocation, bio.contacts.location));
-
-        header.append(fillData(HTMLbioPic, bio.biopic));
-        header.append(fillData(HTMLwelcomeMsg, bio.welcomeMessage));
-        header.append(HTMLskillsStart);
-        bio.skills.forEach(function (skill) {
-            $('#skills').append(fillData(HTMLskills, skill));
-        });
+    function getWork() {
+        return {
+            jobs: [{
+                employer: '',
+                title: '',
+                location: '',
+                dates: '',
+                description: '',
+            }],
+            display: function () {
+                
+            }
+        };
     }
 
     function getEducation() {
@@ -64,19 +75,6 @@ $(function () {
                 school: '',
                 dates: '',
                 url: ''
-            }],
-            display: function () { }
-        };
-    }
-
-    function getWork() {
-        return {
-            jobs: [{
-                employer: '',
-                title: '',
-                location: '',
-                dates: '',
-                description: '',
             }],
             display: function () { }
         };
